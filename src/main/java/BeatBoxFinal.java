@@ -11,7 +11,8 @@ import java.net.Socket;
 import java.util.*;
 
 /**
- *
+ * The final version of BeatBox.
+ * This class draw a panel and establish GUI for comfortable using.
  * */
 public class BeatBoxFinal {
     JFrame theFrame;
@@ -43,6 +44,11 @@ public class BeatBoxFinal {
         new BeatBoxFinal().startUp("Serhii");
     }
 
+    /**
+     * This method establish connection to th local server with user's name.
+     * And then, call other method for correct working.
+     * @param name of user.
+     * */
     private void startUp(String name) {
         userName = name;
 
@@ -59,6 +65,11 @@ public class BeatBoxFinal {
         buildGUI();
     } //close startUp
 
+    /**
+     * This method builds a GUI for comfortable using.
+     * GUI includes all buttons and check boxes for making midi-music
+     * and control panel with appropriate buttons like "Stop", "Start" ect.
+     * */
     private void buildGUI() {
         theFrame = new JFrame("Cyber BeatBox");
         BorderLayout layout = new BorderLayout();
@@ -125,6 +136,10 @@ public class BeatBoxFinal {
         theFrame.setVisible(true);
     } //close buildGUI
 
+    /**
+     * This method includes MidiSystem to main program
+     * for creating and playing melodies, which users create or send to each other.
+     * */
     private void setUpMidi() {
         try {
             sequencer = MidiSystem.getSequencer();
@@ -137,6 +152,9 @@ public class BeatBoxFinal {
         }
     } //close setIpMidi
 
+    /**
+     * This method creates and plays tracks.
+     * */
     private void buildTrackAndStart() {
         ArrayList<Integer> trackList = null;
         sequence.deleteTrack(track);
@@ -167,18 +185,28 @@ public class BeatBoxFinal {
         }
     } //close buildTrackAndStart
 
+    /**
+     * Controller for button "Start"
+     * */
     public class MyStartListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             buildTrackAndStart();
         }
     }
 
+    /**
+     * Controller for button "Stop"
+     * */
     public class MyStopListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             sequencer.stop();
         }
     }
 
+
+    /**
+     * Controller for button "Up Tempo"
+     * */
     public class MyUpTempoListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             float tempoFactor = sequencer.getTempoFactor();
@@ -186,6 +214,9 @@ public class BeatBoxFinal {
         }
     }
 
+    /**
+     * Controller for button "Down Tempo"
+     * */
     public class MyDownTempoListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             float tempoFactor = sequencer.getTempoFactor();
@@ -193,6 +224,9 @@ public class BeatBoxFinal {
         }
     }
 
+    /**
+     * Controller for button "Send", which sends messages.
+     * */
     public class MySendListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             boolean[] checkboxState = new boolean[256];
@@ -226,6 +260,11 @@ public class BeatBoxFinal {
         }
     }
 
+    /**
+     * This thread is extra connection with server.
+     * It receives all messages from server to your application.
+     * Thread will be killed only when application will be closed.
+     * */
     public class RemoteReader implements Runnable {
         boolean[] checkboxState = null;
         String nameToShow = null;
