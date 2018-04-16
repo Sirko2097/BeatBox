@@ -10,7 +10,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
 
-
+/**
+ *
+ * */
 public class BeatBoxFinal {
     JFrame theFrame;
     JPanel mainPanel;
